@@ -6,10 +6,10 @@ class BurgerBuilder extends Component {
 
     state = {
         ingredients:{
-            cheese: 2,
-            salad: 2,
-            bacon: 1,
-            meat: 1                        
+            cheese: 0,
+            salad: 0,
+            bacon: 0,
+            meat: 0                        
         }
     }
 
