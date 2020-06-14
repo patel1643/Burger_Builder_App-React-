@@ -3,6 +3,7 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.module.css';
 
 
+
 const burger = ( props ) =>{
     
     let dynamicIngredients = Object.keys(props.ingredients).map(igKey => {
@@ -18,12 +19,15 @@ const burger = ( props ) =>{
         dynamicIngredients = <p>Please start adding your favourite ingredients here!</p>        
         }
     return(
-        <div className={classes.Burger}>
+        
+            <div className={classes.Burger}>
             <BurgerIngredient type="bread-top"/>
             {/* renders the ingredients dynamically */}
             {dynamicIngredients}
             <BurgerIngredient type="bread-bottom"/>
         </div>
+      
+        
         
     )
 };

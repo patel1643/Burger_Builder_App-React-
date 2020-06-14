@@ -3,6 +3,7 @@ import Auxillary from '../../hoc/Auxillary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
+
 const INGREDIENT_PRICES = {
     cheese: 1.2,
     bacon: 0.7,
@@ -19,8 +20,22 @@ class BurgerBuilder extends Component {
             bacon: 0,
             meat: 0                        
         },
-        totalPrice : 3.25
+        totalPrice : 3.25,
+        purshasable: false
     }
+
+    updatePurchaseState = () =>{
+        const ingredients = {
+            ...this.state.ingredients
+        }
+        const sum = Object.keys(ingredients).map(
+            igkey => {
+                return ingredients[igkey];
+            }
+        ).reduce((sum, el) => {
+            return sum + el;
+        },0)
+    };
 
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];  
@@ -56,14 +71,29 @@ class BurgerBuilder extends Component {
 
     };
 
+    resetHandler = () =>{
+        const updatedIngredients = {
+            cheese: 0,
+            salad: 0,
+            bacon: 0,
+            meat: 0
+        }
+
+        return this.setState({ingredients : updatedIngredients, totalPrice: 3.25})
+    };
+
     render() {
         return(
             <Auxillary>
+                
                 <Burger ingredients={this.state.ingredients}/>
+                
+                
                 <BuildControls
                 addIngredient={this.addIngredientHandler}
                 removeIngredient = {this.removeIngredientHandler}
-                price={this.state.totalPrice} />
+                price={this.state.totalPrice}
+                reset={this.resetHandler} />
             </Auxillary>
         );
     }
