@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './BurgerIngredient.module.css';
-import {Animated} from "react-animated-css";
+
 
 const BurgerIngredient = ( props ) => {
     let ingredient = null;
