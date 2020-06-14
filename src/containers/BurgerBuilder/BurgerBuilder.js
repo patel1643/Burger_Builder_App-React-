@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Auxillary from '../../hoc/Auxillary';
 import Burger from '../../components/Burger/Burger';
-import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 
 const INGREDIENT_PRICES = {
@@ -21,7 +23,8 @@ class BurgerBuilder extends Component {
             meat: 0                        
         },
         totalPrice : 3.25,
-        purshasable: false
+        purchasable: false,
+        purchasing: false
     }
 
     updatePurchaseState(ingredients){
@@ -33,7 +36,7 @@ class BurgerBuilder extends Component {
         ).reduce((sum, el) => {
             return sum + el;
         },0);
-        this.setState({purshasable: sum > 0})
+        this.setState({purchasable: sum > 0})
     };
 
     addIngredientHandler = (type) => {
@@ -81,23 +84,37 @@ class BurgerBuilder extends Component {
             bacon: 0,
             meat: 0
         }
-
+        this.updatePurchaseState(updatedIngredients);
         return this.setState({ingredients : updatedIngredients, totalPrice: 3.25})
     };
 
+    purchaseHandler = () => {
+        this.setState({purchasing:true});
+    }
+
+    purchaseCancelHandeler = () =>{
+        this.setState({purchasing: false})
+    }
+
+    purchaseContinueHandler = () =>{
+        alert('You Continued!');
+    }
     render() {
         return(
             <Auxillary>
-                
+                <Modal show = {this.state.purchasing} modalClosed={this.purchaseCancelHandeler}>
+                    <OrderSummary ingredients={this.state.ingredients} 
+                    purchaseCancelled={this.purchaseCancelHandeler}
+                    purchaseContinued={this.purchaseContinueHandler} />
+                </Modal>              
                 <Burger ingredients={this.state.ingredients}/>
-                
-                
                 <BuildControls
                 addIngredient={this.addIngredientHandler}
                 removeIngredient = {this.removeIngredientHandler}
                 price={this.state.totalPrice}
                 reset={this.resetHandler}
-                purchasable={this.state.purshasable} />
+                purchasable={this.state.purchasable}
+                ordered={this.purchaseHandler} />
             </Auxillary>
         );
     }
